@@ -574,7 +574,7 @@ document.getElementById("appointmentForm").addEventListener("submit", function(e
   
   const formData = Object.fromEntries(new FormData(this).entries());
 
-  fetch("https://script.google.com/macros/s/AKfycbzpEQWz-mNJ--daQglJgMxkayOIgjv_jHAw4UayNsvbBKdBpmclZpdsEb61fHjqPSMzlg/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxRVswgc_leA0JGxUnODnUySDj_bEgKlhUX0hZ3dHPLoRdRAgxM1hLnXUgWWfflBGNk6A/exec", {
     method: "POST",
     body: JSON.stringify(formData)
   })

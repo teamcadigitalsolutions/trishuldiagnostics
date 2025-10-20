@@ -333,17 +333,85 @@
 </div>
 
 <script>
-// Populate modal table for other tests
+// ✅ Full Diagnostic Test List (from both images)
 const allTests = [
   { name: "ECG", price: 500 },
   { name: "Haemoglobin", price: 200 },
   { name: "Platelet", price: 200 },
+  { name: "AEC", price: 300 },
   { name: "Blood Group", price: 200 },
+  { name: "BT - Bleeding Time", price: 100 },
+  { name: "CT - Clotting Time", price: 100 },
+  { name: "DCT - Direct Coombs Test", price: 700 },
+  { name: "ICT - Indirect Coombs Test", price: 700 },
+  { name: "PT - Prothrombin Time", price: 500 },
+  { name: "APTT", price: 600 },
+  { name: "Fibrinogen", price: 1000 },
+  { name: "Malarial Parasite", price: 200 },
+  { name: "Hb Electrophoresis", price: 1000 },
+  { name: "SHBG", price: 2500 },
+  { name: "FBS", price: 100 },
+  { name: "PPBS", price: 100 },
+  { name: "LFT", price: 600 },
+  { name: "KFT", price: 800 },
+  { name: "ACE", price: 1200 },
+  { name: "TB Gold", price: 3000 },
+  { name: "ANA Profile", price: 4500 },
+  { name: "TPHA", price: 1000 },
+  { name: "TSH", price: 300 },
+  { name: "DHEA", price: 1500 },
+  { name: "Torch IgM", price: 1000 },
+  { name: "High Sensitivity C Reactive", price: 800 },
+  { name: "Testosterone Free", price: 1500 },
+  { name: "HBSAG", price: 400 },
   { name: "Lipid Profile", price: 500 },
+  { name: "Zinc", price: 1800 },
+  { name: "Copper", price: 1300 },
+  { name: "Iron", price: 800 },
+  { name: "CA 15.3", price: 1500 },
+  { name: "RBS", price: 100 },
+  { name: "Blood Urea", price: 150 },
+  { name: "S. Creatinine", price: 200 },
+  { name: "Uric Acid", price: 200 },
   { name: "HbA1C", price: 500 },
+  { name: "S. Calcium", price: 200 },
+  { name: "Phosphorus", price: 300 },
+  { name: "Magnesium", price: 600 },
+  { name: "S. Iron", price: 500 },
+  { name: "Folic Acid", price: 1000 },
+  { name: "Ferritin", price: 700 },
+  { name: "Vitamin B12", price: 900 },
+  { name: "Amylase", price: 100 },
   { name: "Vitamin D", price: 1200 },
-  { name: "TSH", price: 300 }
-  // Add more tests as required
+  { name: "Electrolytes", price: 500 },
+  { name: "TFT", price: 500 },
+  { name: "Free T3", price: 300 },
+  { name: "Free T4", price: 300 },
+  { name: "FSH", price: 500 },
+  { name: "LH", price: 500 },
+  { name: "Prolactin", price: 500 },
+  { name: "Progesterone", price: 600 },
+  { name: "AMH", price: 2000 },
+  { name: "Beta HCG", price: 700 },
+  { name: "CPK", price: 500 },
+  { name: "Lipase", price: 600 },
+  { name: "Cortisol", price: 700 },
+  { name: "Homocystine", price: 1000 },
+  { name: "Triple Marker", price: 2500 },
+  { name: "Troponin I", price: 1000 },
+  { name: "Double Marker", price: 2000 },
+  { name: "Estrogen", price: 600 },
+  { name: "Insulin Fasting", price: 700 },
+  { name: "Urine Routine", price: 200 },
+  { name: "Urine Culture & Sensitivity", price: 500 },
+  { name: "Blood Culture", price: 1200 },
+  { name: "HIV 1 & 2", price: 500 },
+  { name: "HCV", price: 600 },
+  { name: "VDRL", price: 400 },
+  { name: "Complete Blood Count (CBC)", price: 400 },
+  { name: "RA Factor", price: 500 },
+  { name: "CRP", price: 500 },
+  { name: "Total IGE", price: 900 }
 ];
 
 // Populate modal table
@@ -398,7 +466,7 @@ document.getElementById("appointmentForm").addEventListener("submit", function(e
   
   const formData = Object.fromEntries(new FormData(this).entries());
 
-  fetch("https://script.google.com/macros/s/AKfycbzpEQWz-mNJ--daQglJgMxkayOIgjv_jHAw4UayNsvbBKdBpmclZpdsEb61fHjqPSMzlg/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxRVswgc_leA0JGxUnODnUySDj_bEgKlhUX0hZ3dHPLoRdRAgxM1hLnXUgWWfflBGNk6A/exec", {
     method: "POST",
     body: JSON.stringify(formData)
   })
