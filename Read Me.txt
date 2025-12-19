@@ -1,0 +1,55 @@
+Open URL : http://localhost/UKVishwakarma/index.html
+
+Database Name : uk_vishwakarma
+
+$host = "127.0.0.1";
+$username = "admin";
+$password = "admin@123";
+$database = "uk_vishwakarma";
+
+-----------
+
+	CREATE TABLE `join_requests` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `full_name` varchar(150) NOT NULL,
+ `email` varchar(100) NOT NULL,
+ `contact_number` varchar(20) NOT NULL,
+ `reason` text NOT NULL,
+ `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+	CREATE TABLE `medical_assistance_requests` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `patient_name` varchar(150) NOT NULL,
+ `hospital_name` varchar(150) NOT NULL,
+ `amount_paid` varchar(50) NOT NULL,
+ `contact_number` varchar(20) NOT NULL,
+ `medical_reason` text NOT NULL,
+ `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+	CREATE TABLE `pratibha_applications` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `full_name` varchar(150) NOT NULL,
+ `score` varchar(50) NOT NULL,
+ `institution` varchar(150) NOT NULL,
+ `phone` varchar(20) NOT NULL,
+ `address` text NOT NULL,
+ `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+	CREATE TABLE `study_assistance_requests` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `full_name` varchar(150) NOT NULL,
+ `course_stream` varchar(100) NOT NULL,
+ `institution` varchar(150) NOT NULL,
+ `phone` varchar(20) NOT NULL,
+ `reason` text NOT NULL,
+ `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+-----------

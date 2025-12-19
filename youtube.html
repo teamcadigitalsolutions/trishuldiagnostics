@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UK Vishwakarma YouTube Channel</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="header-title">
+      <h1>Vishwakarma Okkuta - Uttara Kannada</h1>
+      <h2>ವಿಶ್ವಕರ್ಮ ಒಕ್ಕೂಟ - ಉತ್ತರ ಕನ್ನಡ</h2>
+    </div>
+    <nav class="main-nav">
+      <button class="nav-toggle">&#9776;</button>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pratibha.html">Pratibha Puraskara</a></li>
+        <li><a href="study-aid.html">Study Assistance</a></li>
+        <li><a href="medical-aid.html">Medical Assistance</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="youtube.html">YouTube</a></li>
+        <li><a href="join.html">Join Us</a></li>
+        <li><a href="tel:+918762546581" class="call-link">📞 Call Now</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="section">
+    <h2>Our YouTube Videos</h2>
+    <p class="intro-text">Watch the latest videos from our UK Vishwakarma channel.</p>
+    <div id="youtubeGrid" class="video-grid">
+      <!-- Videos will be dynamically inserted here -->
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Vishwakarma Okkuta - Uttara Kannada. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Example YouTube videos array (replace with API fetch for dynamic updates)
+    const videos = [
+      { id: "LOpm3ssk45w", title: "Community Event Highlights" },
+      { id: "FETugDJsj_o", title: "Pratibha Puraskara Winners" },
+      { id: "yfNjLPYfbSE", title: "Medical Aid Awareness" },
+      { id: "DLuvm_mFTFg", title: "Cultural Festival Highlights" },
+      { id: "LQxHSaiP0eg", title: "Youth Talent Showcase" }
+    ];
+
+
+    const grid = document.getElementById("youtubeGrid");
+
+    videos.forEach(video => {
+      const div = document.createElement("div");
+      div.classList.add("video-item");
+      div.innerHTML = `
+        <iframe width="100%" height="250" src="https://www.youtube.com/embed/${video.id}" frameborder="0" allowfullscreen></iframe>
+        <h3>${video.title}</h3>
+      `;
+      grid.appendChild(div);
+    });
+  </script>
+</body>
+</html>
