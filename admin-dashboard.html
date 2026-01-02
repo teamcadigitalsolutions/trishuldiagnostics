@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard | Trishul Diagnostic</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f8f9fa;
+    }
+    .sidebar {
+      height: 100vh;
+      background: #0d6efd;
+      color: white;
+      padding-top: 20px;
+      position: fixed;
+      width: 220px;
+    }
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin: 5px 10px;
+    }
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: rgba(255,255,255,0.2);
+    }
+    .content {
+      margin-left: 230px;
+      padding: 30px;
+    }
+    .table-container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h4 class="text-center mb-4">⚙️ Admin Panel</h4>
+    <a href="#" class="active"><i class="fa fa-home me-2"></i> Dashboard</a>
+    <a href="#"><i class="fa fa-users me-2"></i> Patients</a>
+    <a href="#"><i class="fa fa-file-alt me-2"></i> Reports</a>
+    <a href="#"><i class="fa fa-cog me-2"></i> Settings</a>
+    <hr class="bg-light">
+    <a href="#" onclick="logout()" class="text-danger"><i class="fa fa-sign-out-alt me-2"></i> Logout</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold">📊 Admin Dashboard</h2>
+      <button class="btn btn-danger" onclick="logout()"><i class="fa fa-sign-out-alt me-2"></i> Logout</button>
+    </div>
+
+    <!-- Upload Excel Section -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"><i class="fa fa-upload me-2"></i> Upload Patient Data</h5>
+      </div>
+      <div class="card-body">
+        <input type="file" id="excelFile" class="form-control mb-3" accept=".xls,.xlsx">
+        <button class="btn btn-primary" onclick="uploadExcel()"><i class="fa fa-file-excel me-2"></i> Upload Excel</button>
+      </div>
+    </div>
+
+    <!-- Search & Export -->
+    <div class="d-flex justify-content-between mb-3">
+      <input type="text" id="searchInput" class="form-control w-50" placeholder="🔍 Search patients...">
+      <div>
+        <button class="btn btn-success me-2" onclick="exportExcel()"><i class="fa fa-file-excel me-1"></i> Export Excel</button>
+        <button class="btn btn-danger" onclick="exportPDF()"><i class="fa fa-file-pdf me-1"></i> Export PDF</button>
+      </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="table-container">
+      <h5 class="mb-3">📝 Patient Records</h5>
+      <table class="table table-bordered table-hover align-middle text-center" id="dataTable">
+        <thead class="table-primary">
+          <tr>
+            <th>Patient Name</th>
+            <th>Age</th>
+            <th>Test</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data from Excel will appear here -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+  <script>
+    // ✅ Session check
+    if (localStorage.getItem("isAdmin") !== "true") {
+      window.location.href = "dashboard.html"; 
+    }
+
+    function logout() {
+      localStorage.removeItem("isAdmin");
+      window.location.href = "dashboard.html";
+    }
+
+    // Store table data globally
+    let tableData = [];
+
+    function uploadExcel() {
+      const file = document.getElementById("excelFile").files[0];
+      if (!file) {
+        alert("Please select an Excel file first.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data, {type: 'array'});
+        const sheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[sheetName];
+        tableData = XLSX.utils.sheet_to_json(worksheet);
+        renderTable(tableData);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+
+    function renderTable(data) {
+      const tbody = document.querySelector("#dataTable tbody");
+      tbody.innerHTML = "";
+      data.forEach(row => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row["Patient Name"] || ""}</td>
+          <td>${row["Age"] || ""}</td>
+          <td>${row["Test"] || ""}</td>
+          <td>${row["Result"] || ""}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 🔍 Search filter
+    document.getElementById("searchInput").addEventListener("keyup", function() {
+      const value = this.value.toLowerCase();
+      const filtered = tableData.filter(row => 
+        (row["Patient Name"] || "").toLowerCase().includes(value) ||
+        (row["Test"] || "").toLowerCase().includes(value) ||
+        (row["Result"] || "").toLowerCase().includes(value)
+      );
+      renderTable(filtered);
+    });
+
+    // ⬇️ Export Excel
+    function exportExcel() {
+      if (tableData.length === 0) {
+        alert("No data to export!");
+        return;
+      }
+      const ws = XLSX.utils.json_to_sheet(tableData);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Patients");
+      XLSX.writeFile(wb, "patients.xlsx");
+    }
+
+    // ⬇️ Export PDF
+    function exportPDF() {
+      if (tableData.length === 0) {
+        alert("No data to export!");
+        return;
+      }
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.text("Patient Records", 14, 15);
+      doc.autoTable({
+        head: [["Patient Name", "Age", "Test", "Result"]],
+        body: tableData.map(r => [r["Patient Name"] || "", r["Age"] || "", r["Test"] || "", r["Result"] || ""]),
+      });
+      doc.save("patients.pdf");
+    }
+  </script>
+
+</body>
+</html>
